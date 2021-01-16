@@ -3,6 +3,9 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Double.NaN;
+import static validador.QuadraticEquationValidator.validateNotZeroValueA;
+
 public class QuadraticEquation {
     private final Double a;
     private final Double b;
@@ -16,29 +19,37 @@ public class QuadraticEquation {
         roots = calculateRoots();
     }
 
+    public Double getA() {
+        return a;
+    }
+
     public Double calculateDiscriminant() {
-        assert a != 0;
         return b * b - (4 * a * c);
     }
 
     public Double calculateFirstRoot() {
-        assert a != 0;
-        return (-b + Math.sqrt(calculateDiscriminant())) / (2 * a);
+        if (validateNotZeroValueA(this)) {
+            return (-b + Math.sqrt(calculateDiscriminant())) / (2 * a);
+        }
+        return NaN;
     }
 
     public Double calculateSecondRoot() {
-        assert a != 0;
-        return (-b - Math.sqrt(calculateDiscriminant())) / (2 * a);
+        if (validateNotZeroValueA(this)) {
+            return (-b - Math.sqrt(calculateDiscriminant())) / (2 * a);
+        }
+        return NaN;
     }
 
     public List<Double> calculateRoots() {
         List<Double> roots = new ArrayList<>();
-        assert a != 0;
-        if (calculateDiscriminant() > 0) {
-            roots.add(calculateFirstRoot());
-            roots.add(calculateSecondRoot());
-        } else if (calculateDiscriminant() == 0) {
-            roots.add(calculateFirstRoot());
+        if (validateNotZeroValueA(this)) {
+            if (calculateDiscriminant() > 0) {
+                roots.add(calculateFirstRoot());
+                roots.add(calculateSecondRoot());
+            } else if (calculateDiscriminant() == 0) {
+                roots.add(calculateFirstRoot());
+            }
         }
         return roots;
     }

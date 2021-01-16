@@ -8,6 +8,8 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static java.lang.Double.NaN;
+
 @RunWith(Parameterized.class)
 public class QuadraticEquationTest {
     private final Double a;
@@ -32,7 +34,12 @@ public class QuadraticEquationTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {2.0, 3.0, 1.0, 1.0, -0.5, -1.0, 2}
+                {2.0, 3.0, 1.0, 1.0, -0.5, -1.0, 2},
+                {16.0, -8.0, 1.0, 0.0, 0.25, 0.25, 1},
+                {9.0, -6.0, 2.0, -36.0, NaN, NaN, 0},
+                {-2.0, 0.0, 1.0, 8.0, -0.7071067811865476, 0.7071067811865476, 2},
+                {0.0, 0.0, 0.0, 0.0, NaN, NaN, 0},
+
         });
     }
 
@@ -53,6 +60,6 @@ public class QuadraticEquationTest {
 
     @Test
     public void calculateRoots() {
-       Assert.assertEquals(numberOfRootsExpected, Integer.valueOf(new QuadraticEquation(a,b,c).calculateRoots().size()));
+        Assert.assertEquals(numberOfRootsExpected, Integer.valueOf(new QuadraticEquation(a, b, c).calculateRoots().size()));
     }
 }
